@@ -14,13 +14,18 @@ hiper_glm <- function(design, outcome, model = "linear", option = list()){
   if(!(model %in% supported_models)){
     stop("Specified model is not supported.")
   }
+  n = dim(design)[1]; p = dim(design)[2]
 
   # Logic for linear models specifically
   if(model == "linear"){
     # User-specified solver
     if("mle_solver" %in% names(option)){
       if(option["mle_solver"] == "BFGS"){
-        #TODO implement BFGS
+        fit = optim(par = rep(0, p), fn = lm_log_likelihood,
+                    gr = lm_loglike_gradient, outcome = outcome,
+                    design = design, method = "BFGS",
+                    control = list(fnscale = -1))
+        model_coefs = fit$par
       }
       else{
         stop("Specified solver is not supported.")
