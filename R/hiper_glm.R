@@ -33,7 +33,7 @@ hiper_glm <- function(design, outcome, model = "linear", option = list()){
     }
     # Default pseudo-inverse solver
     else{
-      model_coefs = solve(t(design) %*% design, t(design) %*% outcome)
+      model_coefs = as.vector(solve(t(design) %*% design, t(design) %*% outcome))
     }
   }
 
