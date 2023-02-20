@@ -28,11 +28,11 @@ hiper_glm <- function(design, outcome, model = "linear", option = list()){
     }
     # Default pseudo-inverse solver
     else{
-      # TODO implement pseudo-inverse
+      model_coefs = solve(t(design) %*% design, t(design) %*% outcome)
     }
   }
 
-  hglm_out <- list()
+  hglm_out <- list(Model_Coefs = model_coefs)
   class(hglm_out) <- "hglm"
   return(hglm_out)
 }
