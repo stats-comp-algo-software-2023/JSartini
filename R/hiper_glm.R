@@ -9,8 +9,29 @@
 #'
 #' @export
 #'
-hiper_glm <- function(design, outcome){
-  #TODO: find MLE. Currently returns S3 object containing empty list.
+hiper_glm <- function(design, outcome, model = "linear", option = list()){
+  supported_models = c("linear")
+  if(!(model %in% supported_models)){
+    stop("Specified model is not supported.")
+  }
+
+  # Logic for linear models specifically
+  if(model == "linear"){
+    # User-specified solver
+    if("mle_solver" %in% names(option)){
+      if(option["mle_solver"] == "BFGS"){
+        #TODO implement BFGS
+      }
+      else{
+        stop("Specified solver is not supported.")
+      }
+    }
+    # Default pseudo-inverse solver
+    else{
+      # TODO implement pseudo-inverse
+    }
+  }
+
   hglm_out <- list()
   class(hglm_out) <- "hglm"
   return(hglm_out)
