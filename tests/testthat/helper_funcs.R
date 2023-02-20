@@ -1,3 +1,13 @@
+approx_grad <- function(func, x, dx = .Machine$double.eps^(1/3), ...) {
+  dimension = length(x)
+  numerical_grad <- rep(0, dimension)
+  for(i in 1:dimension){
+    e_i = replace(rep(0, dimension), i, 1)
+    numerical_grad[i] = (func(x + dx*e_i, ...) - func(x - dx*e_i, ...))/(2*dx)
+  }
+  return(numerical_grad)
+}
+
 are_all_close <- function(v, w, abs_tol = 1e-6, rel_tol = 1e-6) {
   abs_diff <- abs(v - w)
   are_all_within_atol <- all(abs_diff < abs_tol)
