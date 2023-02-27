@@ -10,7 +10,10 @@
 #' @export
 #'
 coef.hglm <- function(object, ...){
-  warning("Not yet implemented.")
+  if(!("Model_Coefs" %in% names(object))){
+    stop("Object does not have coefficients calculated as required.")
+  }
+  return(object[["Model_Coefs"]])
 }
 
 #' Extraction of variance-covariance of hglm model coefficients
